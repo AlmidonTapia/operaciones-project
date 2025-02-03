@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-6">
+        <form [formGroup]="form" (ngSubmit)="generateMatrix()">
+            <div class="mb-3">
+                <label class="form-label">Número de nodos:</label>
+                <input type="number" class="form-control" formControlName="nodes" />
+            </div>
+            <button class="btn btn-primary" [disabled]="!form.valid">
+                Generar Matriz
+            </button>
+        </form>
+
+        @if (showPathSelection()) {
+        <div class="mt-4">
+            <div class="mb-3">
+                <label class="form-label">Nodo origen:</label>
+                <input type="number" class="form-control" formControlName="start" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nodo destino:</label>
+                <input type="number" class="form-control" formControlName="end" />
+            </div>
+
+            <h4>Matriz de adyacencia</h4>
+            <table class="table table-bordered">
+                @for (row of matrix(); track $index; let rowIndex = $index) {
+                <tr>
+                    @for (cell of row; track $index; let colIndex = $index) {
+                    <td>
+                        <input type="number" [(ngModel)]="matrix()[rowIndex][colIndex]" class="form-control" />
+                    </td>
+                    }
+                </tr>
+                }
+            </table>
+            <button class="btn btn-success" (click)="calculateDijkstra()">
+                Calcular Ruta
+            </button>
+        </div>
+        }
+
+        @if (result()) {
+        <div class="mt-4">
+            <h4>Resultado:</h4>
+            <p>Ruta más corta: {{ result()?.path }}</p>
+            <p>Distancia total: {{ result()?.distance }}</p>
+        </div>
+        }
+    </div>
+</div>

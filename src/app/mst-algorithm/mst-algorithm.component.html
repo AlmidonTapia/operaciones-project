@@ -1,0 +1,42 @@
+<div class="row">
+    <div class="col-md-6">
+        <form [formGroup]="form" (ngSubmit)="generateMatrix()">
+            <div class="mb-3">
+                <label class="form-label">Número de nodos:</label>
+                <input type="number" class="form-control" formControlName="nodes" />
+            </div>
+            <button class="btn btn-primary" [disabled]="!form.valid">
+                Generar Matriz
+            </button>
+        </form>
+
+        <div *ngIf="matrix().length > 0" class="mt-4">
+            <h4>Matriz de adyacencia</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let i of matrix(); let index = index">Nodo {{ index + 1 }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of matrix(); let rowIndex = index">
+                        <th>Nodo {{ rowIndex + 1 }}</th>
+                        <td *ngFor="let cell of row; let colIndex = index">
+                            <input type="number" [(ngModel)]="matrix()[rowIndex][colIndex]" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-success" (click)="calculateMST()">
+                Calcular MST
+            </button>
+        </div>
+
+        <div *ngIf="result()" class="mt-4">
+            <h4>Resultado:</h4>
+            <p>Aristas del árbol: {{ result()?.edges?.join(', ') }}</p>
+            <p>Costo total: {{ result()?.cost }}</p>
+        </div>
+    </div>
+</div>
