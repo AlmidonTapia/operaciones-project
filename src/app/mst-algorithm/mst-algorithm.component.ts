@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { GraphViewComponent } from "../graph-view/graph-view.component";
 @Component({
   selector: 'app-mst-algorithm',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, GraphViewComponent],
   templateUrl: './mst-algorithm.component.html',
   styleUrl: './mst-algorithm.component.css'
 })
@@ -13,6 +14,9 @@ export class MstAlgorithmComponent {
   matrix: number[][] = [];
   result: any[] = [];
   totalWeight: number = 0;
+
+  graphNodes: any[] = [];
+  graphEdges: any[] = [];
 
   generateMatrix() {
     this.matrix = Array(this.nodes).fill(0).map(() => Array(this.nodes).fill(0));
@@ -54,5 +58,19 @@ export class MstAlgorithmComponent {
     }
 
     this.result = result;
+    //grafico
+    this.graphNodes = Array.from({ length: this.nodes }, (_, i) => ({
+      id: i + 1,
+      label: `Nodo ${i + 1}`
+    }));
+
+    this.graphEdges = this.result.map(edge => ({
+      from: edge.from + 1,
+      to: edge.to + 1,
+      label: edge.weight.toString(),
+      color: '#4CAF50',
+      width: 3
+    }));
   }
+  
 }
