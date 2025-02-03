@@ -9,52 +9,50 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
   styleUrl: './mst-algorithm.component.css'
 })
 export class MstAlgorithmComponent {
-  form: FormGroup;
-  matrix = signal<number[][]>([]);
-  result = signal<{ edges: string[]; cost: number } | null>(null);
-  nodes = signal<number>(0);
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      nodes: ['', [Validators.required, Validators.min(2)]],
-    });
-  }
+    nodes: number = 0;
+  matrix: number[][] = [];
+  result: any[] = [];
+  totalWeight: number = 0;
 
   generateMatrix() {
-    const nodes = this.form.value.nodes;
-    this.nodes.set(nodes);
-    this.matrix.set(Array(nodes).fill(0).map(() => Array(nodes).fill(0)));
+    this.matrix = Array(this.nodes).fill(0).map(() => Array(this.nodes).fill(0));
+    this.result = [];
+  }
+
+  updateSymmetric(i: number, j: number, event: any) {
+    const value = parseFloat(event.target.value) || 0;
+    this.matrix[i][j] = value;
+    this.matrix[j][i] = value;
   }
 
   calculateMST() {
-    const graph = this.matrix().map((row) => [...row]);
-    const selected = new Array(this.nodes()).fill(false);
-    selected[0] = true;
-    const edges: string[] = [];
-    let cost = 0;
+    // Implementación del algoritmo de Prim
+    const nodes = this.nodes;
+    const selected = new Set<number>([0]);
+    const result = [];
 
-    for (let count = 0; count < this.nodes() - 1; count++) {
+    while (selected.size < nodes) {
       let min = Infinity;
-      let x = 0,
-        y = 0;
+      let from = -1;
+      let to = -1;
 
-      for (let i = 0; i < this.nodes(); i++) {
-        if (selected[i]) {
-          for (let j = 0; j < this.nodes(); j++) {
-            if (!selected[j] && graph[i][j] && graph[i][j] < min) {
-              min = graph[i][j];
-              x = i;
-              y = j;
-            }
+      for (const i of selected) {
+        for (let j = 0; j < nodes; j++) {
+          if (!selected.has(j) && this.matrix[i][j] > 0 && this.matrix[i][j] < min) {
+            min = this.matrix[i][j];
+            from = i;
+            to = j;
           }
         }
       }
 
-      selected[y] = true;
-      edges.push(`${x + 1} - ${y + 1} (${min})`);
-      cost += min;
+      if (min === Infinity) break;
+
+      selected.add(to);
+      result.push({ from, to, weight: min });
+      this.totalWeight += min;
     }
 
-    this.result.set({ edges, cost });
+    this.result = result;
   }
 }

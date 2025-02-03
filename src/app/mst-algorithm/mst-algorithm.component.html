@@ -1,42 +1,42 @@
-<div class="row">
-    <div class="col-md-6">
-        <form [formGroup]="form" (ngSubmit)="generateMatrix()">
-            <div class="mb-3">
-                <label class="form-label">Número de nodos:</label>
-                <input type="number" class="form-control" formControlName="nodes" />
-            </div>
-            <button class="btn btn-primary" [disabled]="!form.valid">
-                Generar Matriz
-            </button>
-        </form>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Árbol de Expansión Mínima</h5>
 
-        <div *ngIf="matrix().length > 0" class="mt-4">
-            <h4>Matriz de adyacencia</h4>
+        <div class="mb-3">
+            <label class="form-label">Número de nodos:</label>
+            <input type="number" class="form-control" [(ngModel)]="nodes" min="2">
+            <button class="btn btn-primary mt-2" (click)="generateMatrix()">Generar Matriz</button>
+        </div>
+
+        <div *ngIf="matrix.length > 0">
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <th></th>
-                        <th *ngFor="let i of matrix(); let index = index">Nodo {{ index + 1 }}</th>
+                        <th *ngFor="let i of matrix; index as j">Nodo {{ j + 1 }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let row of matrix(); let rowIndex = index">
-                        <th>Nodo {{ rowIndex + 1 }}</th>
-                        <td *ngFor="let cell of row; let colIndex = index">
-                            <input type="number" [(ngModel)]="matrix()[rowIndex][colIndex]" class="form-control" />
+                    <tr *ngFor="let row of matrix; index as i">
+                        <th>Nodo {{ i + 1 }}</th>
+                        <td *ngFor="let cell of row; index as j">
+                            <input type="number" class="form-control" [value]="cell" [disabled]="i === j"
+                                (input)="updateSymmetric(i, j, $event)">
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success" (click)="calculateMST()">
-                Calcular MST
-            </button>
+            <button class="btn btn-success" (click)="calculateMST()">Calcular</button>
         </div>
 
-        <div *ngIf="result()" class="mt-4">
-            <h4>Resultado:</h4>
-            <p>Aristas del árbol: {{ result()?.edges?.join(', ') }}</p>
-            <p>Costo total: {{ result()?.cost }}</p>
+        <div *ngIf="result.length > 0" class="mt-3">
+            <h5>Resultado:</h5>
+            <ul>
+                <li *ngFor="let edge of result">
+                    Nodo {{ edge.from + 1 }} → Nodo {{ edge.to + 1 }} (Peso: {{ edge.weight }})
+                </li>
+            </ul>
+            <p>Peso total: {{totalWeight}}</p>
         </div>
     </div>
 </div>

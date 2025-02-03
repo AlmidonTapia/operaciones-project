@@ -1,50 +1,57 @@
-<div class="row">
-    <div class="col-md-6">
-        <form [formGroup]="form" (ngSubmit)="generateMatrix()">
-            <div class="mb-3">
-                <label class="form-label">Número de nodos:</label>
-                <input type="number" class="form-control" formControlName="nodes" />
-            </div>
-            <button class="btn btn-primary" [disabled]="!form.valid">
-                Generar Matriz
-            </button>
-        </form>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Algoritmo de Dijkstra</h5>
 
-        @if (showPathSelection()) {
-        <div class="mt-4">
-            <div class="mb-3">
-                <label class="form-label">Nodo origen:</label>
-                <input type="number" class="form-control" formControlName="start" />
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Nodo destino:</label>
-                <input type="number" class="form-control" formControlName="end" />
+        <div class="mb-3">
+            <label class="form-label">Número de nodos:</label>
+            <input type="number" class="form-control" [(ngModel)]="nodes" min="2">
+            <button class="btn btn-primary mt-2" (click)="generateMatrix()">Generar Matriz</button>
+        </div>
+
+        <div *ngIf="matrix.length > 0">
+            <div class="row mb-3">
+                <div class="col">
+                    <label>Nodo origen:</label>
+                    <select class="form-select" [(ngModel)]="source">
+                        <option *ngFor="let n of matrix; index as i" [value]="i">Nodo {{ i + 1 }}</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label>Nodo destino:</label>
+                    <select class="form-select" [(ngModel)]="target">
+                        <option *ngFor="let n of matrix; index as i" [value]="i">Nodo {{ i + 1 }}</option>
+                    </select>
+                </div>
             </div>
 
-            <h4>Matriz de adyacencia</h4>
             <table class="table table-bordered">
-                @for (row of matrix(); track $index; let rowIndex = $index) {
-                <tr>
-                    @for (cell of row; track $index; let colIndex = $index) {
-                    <td>
-                        <input type="number" [(ngModel)]="matrix()[rowIndex][colIndex]" class="form-control" />
-                    </td>
-                    }
-                </tr>
-                }
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let i of matrix; index as j">Nodo {{j+1}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of matrix; index as i">
+                        <th>Nodo {{i+1}}</th>
+                        <td *ngFor="let cell of row; index as j">
+                            <input type="number" class="form-control" [value]="cell"
+                                (input)="updateMatrixValue(i, j, $event)">
+                        </td>
+                    </tr>
+                </tbody>
             </table>
-            <button class="btn btn-success" (click)="calculateDijkstra()">
-                Calcular Ruta
-            </button>
+            <button class="btn btn-success" (click)="calculateDijkstra()">Calcular</button>
         </div>
-        }
 
-        @if (result()) {
-        <div class="mt-4">
-            <h4>Resultado:</h4>
-            <p>Ruta más corta: {{ result()?.path }}</p>
-            <p>Distancia total: {{ result()?.distance }}</p>
+        <div *ngIf="path.length > 0" class="mt-3">
+            <h5>Resultado:</h5>
+            <p>Distancia: {{distance}}</p>
+            <p>Ruta:
+                <span *ngFor="let node of path; let last = last">
+                    Nodo {{ node + 1 }}{{ last ? '' : ' → ' }}
+                </span>
+            </p>
         </div>
-        }
     </div>
 </div>
