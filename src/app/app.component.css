@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: #0a192f;
+}
+
+body {
+  background-color: #0a192f; /* Azul marino */
+  color: #ccd6f6; /* Blanco */
+}
+
+.navbar {
+  background-color: rgba(10, 25, 47, 0.95); /* Azul marino */
+  backdrop-filter: blur(10px);
+
+  .brand-name {
+    color: #64ffda;
+    font-size: 1.75rem;
+    font-family: 'Space Mono', monospace;
+  }
+   .nav-link {
+    color: #ccd6f6; /* Turquesa */
+    transition: color 0.3s ease;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+
+    &:hover {
+      color: #64ffda; /* Turquesa claro */
+    }
+  }
+
+  .btn-link {
+    color: #ccd6f6;
+    
+    &:hover {
+      color: #64ffda;
+    }
+  }
+}
+
+.container {
+  /*background-color: #112240; /* Azul marino */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+a.navbar-brand, a.navbar-brand:hover {
+  color: #64ffda; /* Turquesa */
+}
+.footer {
+  color: #ccd6f6;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.footer a {
+  color: #64ffda;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+

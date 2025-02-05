@@ -1,13 +1,19 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark ">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">Operaciones App</a>
+    <a class="navbar-brand fw-bold brand-name" routerLink="/">Operaciones App</a>
     <div class="navbar-nav">
-      <a class="nav-link" routerLink="/mst">Árbol de Expansión Mínima</a>
-      <a class="nav-link" routerLink="/dijkstra">Ruta Más Corta</a>
+      <a class="nav-link" href="/mst">Árbol de Expansión Mínima</a>
+      <a class="nav-link" href="/dijkstra">Ruta Más Corta</a>
     </div>
   </div>
 </nav>
 
 <div class="container mt-4">
-  <router-outlet> </router-outlet>
+  <router-outlet></router-outlet>
 </div>
+<footer class="footer">
+  <div class="container">
+    <p>&copy; {{ currentYear }} ALmt2410. Todos los derechos reservados.</p>
+    <p>Desarrollado con <a href="https://angular.io/" target="_blank">Angular</a></p>
+  </div>
+</footer>

@@ -1,0 +1,94 @@
+.card {
+  background-color: #0a192f;
+  color: #ccd6f6;
+}
+
+.card-body {
+  padding: 1.5rem;
+  background-color: #112240;
+  border-radius: 8px;
+  box-shadow: 0 0 5px #effdfa;
+}
+
+.adjacency-matrix {
+  background-color: #112240;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.adjacency-matrix th,
+.adjacency-matrix td {
+  border: 1px solid #64ffda;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.adjacency-matrix th {
+  background: #0a192f;
+  color: #64ffda;
+}
+
+.adjacency-matrix td {
+  background: #112240;
+  color: #ccd6f6;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #64ffda;
+  color: #0a192f;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  align-self: center;
+}
+
+button:hover {
+  background-color: #64ffdbad;
+  color: #0a192f;
+}
+.nodesInput{
+  padding: 0.5rem;
+  background-color: #112240;
+  border: 1px solid #64ffda;
+  color: #ccd6f6;
+  border-radius: 4px;
+  outline: none;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+input {
+  padding: 0.5rem;
+  background-color: #112240;
+  border: none;
+  color: #ccd6f6;
+  border-radius: 4px;
+  outline: none;
+  margin-bottom: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+input:focus {
+  box-shadow: 0 0 5px #64ffda;
+  background-color: #112240;
+  color: #64ffda;
+}
+
+
+option {
+    background-color: #112240;
+    color: #ccd6f6;
+}
+
+.divError {
+  background-color: #112240;
+  color: #ff6b6b;
+  border: 1px solid #ff6b6b;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+  text-align: center;
+}
